@@ -5,8 +5,10 @@
         <group>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsNDocumento.java</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsConexion.java</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Reportes/IngresosYSalidas.jrxml</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Reportes/ProductosInactivos.jrxml</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/Principal.java</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/FrmReportes.java</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/FrmLogin.java</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Reportes/Empleados.jrxml</file>
         </group>
