@@ -9,6 +9,11 @@ import Entidad.ClsEDocumento;
 import Entidad.ClsEKardex;
 import Entidad.ClsEProducto;
 import Entidad.ClsEProveedor;
+import Entidad.TbDocumento;
+import Entidad.TbEmpleado;
+import Entidad.TbKardex;
+import Entidad.TbProducto;
+import Entidad.TbProveedor;
 import Negocio.ClsNDocumento;
 import Negocio.ClsNKardex;
 import Negocio.ClsNProducto;
@@ -18,7 +23,10 @@ import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -116,7 +124,6 @@ public static String[][] Producto=new String[50][50];
         txtUnidad = new javax.swing.JTextField();
         grupo4kar = new javax.swing.JPanel();
         btnCancelarkar = new javax.swing.JButton();
-        btnModificarkar = new javax.swing.JButton();
         btnaceptarkardex = new javax.swing.JButton();
         grupo3kar = new javax.swing.JLayeredPane();
         cmbMov = new javax.swing.JComboBox();
@@ -365,15 +372,6 @@ public static String[][] Producto=new String[50][50];
             }
         });
 
-        btnModificarkar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        btnModificarkar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/modificar.png"))); // NOI18N
-        btnModificarkar.setText("MODIFICAR");
-        btnModificarkar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarkarActionPerformed(evt);
-            }
-        });
-
         btnaceptarkardex.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnaceptarkardex.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/insertar.png"))); // NOI18N
         btnaceptarkardex.setText("INSERTAR");
@@ -388,13 +386,11 @@ public static String[][] Producto=new String[50][50];
         grupo4karLayout.setHorizontalGroup(
             grupo4karLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(grupo4karLayout.createSequentialGroup()
-                .addGap(77, 77, 77)
+                .addGap(166, 166, 166)
                 .addComponent(btnaceptarkardex, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85)
-                .addComponent(btnModificarkar, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
+                .addGap(53, 53, 53)
                 .addComponent(btnCancelarkar)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
         grupo4karLayout.setVerticalGroup(
             grupo4karLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,7 +398,6 @@ public static String[][] Producto=new String[50][50];
                 .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(grupo4karLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnaceptarkardex, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnModificarkar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelarkar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -568,15 +563,17 @@ public static String[][] Producto=new String[50][50];
             cmbMov.setSelectedIndex(1);
         }
         txtCantlUni.setText(tbKardex.getValueAt(filam, 2).toString());
-         DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
-        String f=(String)tbKardex.getValueAt(filam, 3);
-        java.util.Date fechaa=null;       
-        try {
-            fechaa=formato.parse(f);
-            jdtFecha2.setDate(fechaa);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
+         //DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+        //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        Date date = new Date();
+        //String f=(String)tbKardex.getValueAt(filam, 3);
+        //java.util.Date fechaa=null;       
+        //try {
+            //fechaa=formato.parse(f);
+            jdtFecha2.setDate(date);
+//        } catch (ParseException ex) {
+//            ex.printStackTrace();
+//        }
         cmbDocumento.setSelectedIndex(Integer.parseInt(tbKardex.getValueAt(filam, 5).toString())-1);
         cmbProveedor.setSelectedIndex(Integer.parseInt(tbKardex.getValueAt(filam, 6).toString())-1);
         txtCodProdkar.setText(tbKardex.getValueAt(filam, 7).toString());
@@ -618,9 +615,9 @@ public static String[][] Producto=new String[50][50];
     }//GEN-LAST:event_txtCodProdkarMouseEntered
 
     private void txtCodProdkarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodProdkarActionPerformed
-        ClsEProducto objEE=new ClsEProducto();
+        TbProducto objEE=new TbProducto();
         ClsNProducto objNE=new ClsNProducto();
-        objEE.setCBarras(txtCodProdkar.getText());
+        objEE.setCbarrasProd(txtCodProdkar.getText());
         Principal.ayuda=0;  
         if(objNE.MtdBuscarProducto(objEE)==true)
         {
@@ -663,49 +660,39 @@ public static String[][] Producto=new String[50][50];
          txtCantlUni.setEnabled(true);
     }//GEN-LAST:event_btnCancelarkarActionPerformed
 
-    private void btnModificarkarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarkarActionPerformed
-
-        Date fecha=jdtFecha2.getDate();
-        DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
-        String f=formato.format(fecha);
-        ClsEKardex objEE=new ClsEKardex();
-        ClsNKardex objNE=new ClsNKardex();
-        objEE.setNtransaccion(Integer.parseInt(txtKarNroTran.getText()));
-        objEE.setFecha(f);
-        objEE.setIdDocumento(cmbDocumento.getSelectedIndex()+1);
-        objEE.setIdProveedor(cmbProveedor.getSelectedIndex()+1);
-        if(objNE.MtdModificarKardex(objEE)==true)
-        {
-            JOptionPane.showMessageDialog(null, "DATOS MODIFICADOS CORRECTAMENTE");
-            MtdListar();
-        }
-        else
-        {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO MODIFICAR EL DATO");
-        }
-        
-    }//GEN-LAST:event_btnModificarkarActionPerformed
-
     private void btnaceptarkardexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaceptarkardexActionPerformed
         Date fecha=jdtFecha2.getDate();
         DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
         String f=formato.format(fecha);
-        ClsEKardex objEE=new ClsEKardex();
+        TbKardex objEE=new TbKardex();
+        ClsEKardex objKE=new ClsEKardex();
         ClsNKardex objNE=new ClsNKardex();
-        ClsEProducto objEEE=new ClsEProducto();
+        TbProducto objEEE=new TbProducto();
         ClsNProducto objNEE=new ClsNProducto();
         //actualizar stock minimo y maximo de producto
-        objEEE.setsMinimo(Integer.parseInt(txtstockmin.getText()));
-        objEEE.setsMaximo(Integer.parseInt(txtstockmax.getText()));
-        objEEE.setCBarras(txtCodProdkar.getText());
+
+        objEEE.setSminimoProd(Integer.parseInt(txtstockmin.getText()));
+        objEEE.setSmaximoProd(Integer.parseInt(txtstockmax.getText()));
+        objEEE.setCbarrasProd(txtCodProdkar.getText());
+        objKE.setcBarras(txtCodProdkar.getText());
         //Ingresar al kardex
-        objEE.setOperacion(String.valueOf(cmbMov.getSelectedItem()));
-        objEE.setCantidad(Integer.parseInt(txtCantlUni.getText()));
-        objEE.setFecha(f);
-        objEE.setIdEmpleado(Principal.IDempleado);
-        objEE.setIdDocumento(cmbDocumento.getSelectedIndex()+1);
-        objEE.setIdProveedor(cmbProveedor.getSelectedIndex()+1);
-        objEE.setcBarras(txtCodProdkar.getText());
+        objEE.setOperacionKar(String.valueOf(cmbMov.getSelectedItem()));
+        objEE.setCantidadKar(Integer.parseInt(txtCantlUni.getText()));
+        objEE.setFechaKar(fecha);
+        
+        TbEmpleado idempl= new TbEmpleado(Principal.IDempleado);
+        objEE.setIdEmpl(idempl);
+        objKE.setIdEmpleado(Principal.IDempleado);
+        
+        TbDocumento iddoc=new TbDocumento(cmbDocumento.getSelectedIndex()+1);
+        objEE.setIdDocumento(iddoc);
+        
+        TbProveedor idpro=new TbProveedor(cmbProveedor.getSelectedIndex()+1);        
+        objEE.setIdProv(idpro);
+        objKE.setIdProveedor(cmbProveedor.getSelectedIndex()+1);
+        
+        TbProducto cbarra=new TbProducto(txtCodProdkar.getText());
+        objEE.setCbarrasProd(cbarra);
        
         int cantidad,stock,minimo,maximo,ope;
             cantidad=Integer.parseInt(txtCantlUni.getText());
@@ -722,7 +709,7 @@ public static String[][] Producto=new String[50][50];
             {
                 if(objNEE.MtdModificarProducto2(objEEE)==true)
                 {
-                    if(objNE.MtdResgistrarKardex(objEE)==true)
+                    if(objNE.MtdResgistrarKardex( objKE, objEE)==true)
                     {
                         JOptionPane.showMessageDialog(null, "Registro correcto");
                         MtdListar();
@@ -753,7 +740,7 @@ public static String[][] Producto=new String[50][50];
             {
                 if(objNEE.MtdModificarProducto2(objEEE)==true)
                 {
-                    if(objNE.MtdResgistrarKardex(objEE)==true)
+                    if(objNE.MtdResgistrarKardex( objKE, objEE)==true)
                     {
                         JOptionPane.showMessageDialog(null, "Registro correcto");
                         MtdListar();
@@ -808,7 +795,6 @@ public static String[][] Producto=new String[50][50];
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarkar;
-    private javax.swing.JButton btnModificarkar;
     private javax.swing.JButton btnaceptarkardex;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -864,16 +850,19 @@ public static String[][] Producto=new String[50][50];
         modelo.addColumn("ESTADO");
         ClsNProducto objNE=new ClsNProducto();
         String[] datos=new String[8];
-        for(ClsEProducto objE : objNE.MtdListarProducto())
+        
+        List<TbProducto> ListaP = objNE.MtdListarProducto();
+        
+        for(TbProducto objE : ListaP)
         {
-            if(objE.getEstado()==1)
+            if(objE.getEstadoProd()==1)
             {
-                datos[0]=objE.getCBarras();
-                datos[1]=objE.getNombre();
-                datos[2]=String.valueOf(objE.getuCajas());
-                datos[3]=String.valueOf(objE.getIdUnidad());
-                datos[4]=String.valueOf(objE.getsMinimo());
-                datos[5]=String.valueOf(objE.getsMaximo());
+                datos[0]=objE.getCbarrasProd();
+                datos[1]=objE.getNombreProd();
+                datos[2]=String.valueOf(objE.getUcajasProd());
+                datos[3]=String.valueOf(objE.getIdUnid());
+                datos[4]=String.valueOf(objE.getSminimoProd());
+                datos[5]=String.valueOf(objE.getSmaximoProd());
                 datos[6]=String.valueOf(objE.getStock());
                 datos[7]="ACTIVO";
                 modelo.addRow(datos);
@@ -889,11 +878,14 @@ public static String[][] Producto=new String[50][50];
         cmbProveedor.removeAllItems();
         cmbProveedor.setModel(value);    
         ClsNProveedor objN =new ClsNProveedor();
-        for(ClsEProveedor objE : objN.LlenarProveedor())
+        
+        List<TbProveedor> ListaP = objN.LlenarProveedor();
+        
+        for(TbProveedor objE : ListaP)
         {
-            if(objE.getEstado()==1)
+            if(objE.getEstadoProv()==1)
             {
-                prueba[0]=objE.getNombre();
+                prueba[0]=objE.getNombreProv();
                 value.addElement(prueba[0]);
             }                    
         }  
@@ -905,9 +897,12 @@ public static String[][] Producto=new String[50][50];
         cmbDocumento.removeAllItems();
         cmbDocumento.setModel(value);    
         ClsNDocumento objN =new ClsNDocumento();
-        for(ClsEDocumento objE : objN.LlenarDocumento())
+        
+        List<TbDocumento> ListaD=objN.LlenarDocumento();
+        
+        for(TbDocumento objE : ListaD)
         {
-                prueba[0]=objE.getDescripcion();
+                prueba[0]=objE.getDescripciondoc();
                 value.addElement(prueba[0]);                              
         }  
     }
@@ -925,16 +920,19 @@ public static String[][] Producto=new String[50][50];
         modelo.addColumn("Stock");
         ClsNKardex objNE=new ClsNKardex();
         String[] datos=new String[9];
-        for(ClsEKardex objE : objNE.MtdListarKardex())
+        
+        List<TbKardex> ListaK=objNE.MtdListarKardex();
+        
+        for(TbKardex objE : ListaK)
         {
-                datos[0]=String.valueOf(objE.getNtransaccion());
-                datos[1]=objE.getOperacion();
-                datos[2]=String.valueOf(objE.getCantidad());
-                datos[3]=objE.getFecha();
-                datos[4]=String.valueOf(objE.getIdEmpleado());
-                datos[5]=String.valueOf(objE.getIdDocumento());
-                datos[6]=String.valueOf(objE.getIdProveedor());
-                datos[7]=objE.getcBarras();
+                datos[0]=String.valueOf(objE.getNtransaccionKar());
+                datos[1]=objE.getOperacionKar();
+                datos[2]=String.valueOf(objE.getCantidadKar());
+                datos[3]=objE.getFechaKar().toString();
+                datos[4]=String.valueOf(objE.getIdEmpl().getNombreEmpl());
+                datos[5]=String.valueOf(objE.getIdDocumento().getDescripciondoc());
+                datos[6]=String.valueOf(objE.getIdProv().getNombreProv());
+                datos[7]=objE.getCbarrasProd().getCbarrasProd();
                 datos[8]=String.valueOf(objE.getStock());
                 modelo.addRow(datos);
         }

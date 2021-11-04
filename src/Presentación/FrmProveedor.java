@@ -6,12 +6,14 @@
 package Presentación;
 
 import Entidad.ClsEProveedor;
+import Entidad.TbProveedor;
 import Negocio.ClsNProveedor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -207,7 +209,6 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         jPanel2.add(txtNCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, 170, 30));
 
         lblEstado.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
-        lblEstado.setForeground(new java.awt.Color(255, 255, 255));
         lblEstado.setText("Estado");
         jPanel2.add(lblEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 390, -1, 30));
 
@@ -278,23 +279,23 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        ClsEProveedor objEE=new ClsEProveedor();
+        TbProveedor objEE=new TbProveedor();
         ClsNProveedor objNE=new ClsNProveedor();
-        objEE.setDni(txtDni.getText());
-        objEE.setNombre(txtNombre.getText());
-        objEE.setRuc(txtRuc.getText());
-        objEE.setDireccion(txtDireccion.getText());
-        objEE.setCelular(txtCelular.getText());
-        objEE.setEmail(txtEmail.getText());
-        objEE.setNCuenta(txtNCuenta.getText());
+        objEE.setDniProv(txtDni.getText());
+        objEE.setNombreProv(txtNombre.getText());
+        objEE.setRucProv(txtRuc.getText());
+        objEE.setDireccionProv(txtDireccion.getText());
+        objEE.setCelularProv(txtCelular.getText());
+        objEE.setEmailProv(txtEmail.getText());
+        objEE.setNcuentaProv(txtNCuenta.getText());
      
         if(rbtnActivo.isSelected())
         {
-            objEE.setEstado(1);
+            objEE.setEstadoProv(1);
         }
         else
         {
-            objEE.setEstado(0);
+            objEE.setEstadoProv(0);
         }
             
         if(objNE.MtdResgistrarProveedor(objEE)==true)
@@ -309,26 +310,24 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        ClsEProveedor objEE=new ClsEProveedor();
+        TbProveedor objEE=new TbProveedor ();
         ClsNProveedor objNE=new ClsNProveedor();
-        objEE.setIdProveedor(Integer.parseInt(txtIdProveedor.getText()));
-        objEE.setDni(txtDni.getText());
-        objEE.setNombre(txtNombre.getText());
-        objEE.setRuc(txtRuc.getText());
-        objEE.setDireccion(txtDireccion.getText());
-        objEE.setCelular(txtCelular.getText());
-        objEE.setEmail(txtEmail.getText());
-        objEE.setNCuenta(txtNCuenta.getText());
-     
+        objEE.setIdProv(Integer.parseInt(txtIdProveedor.getText()));
+        objEE.setDniProv(txtDni.getText());
+        objEE.setNombreProv(txtNombre.getText());
+        objEE.setRucProv(txtRuc.getText());
+        objEE.setDireccionProv(txtDireccion.getText());
+        objEE.setCelularProv(txtCelular.getText());
+        objEE.setEmailProv(txtEmail.getText());
+        objEE.setNcuentaProv(txtNCuenta.getText());
         if(rbtnActivo.isSelected())
         {
-            objEE.setEstado(1);
+            objEE.setEstadoProv(1);
         }
         else
         {
-            objEE.setEstado(0);
-        }
-            
+            objEE.setEstadoProv(0);
+        }            
         if(objNE.MtdModificarProveedor(objEE)==true)
         {
             JOptionPane.showMessageDialog(null, "PROVEEDOR MODIFICADO");
@@ -442,19 +441,20 @@ public class FrmProveedor extends javax.swing.JInternalFrame {
         modelo.addColumn("EMAIL");
         modelo.addColumn("NRO CUENTA");
         modelo.addColumn("ESTADO");
-        ClsNProveedor objNE=new ClsNProveedor();
-        String[] datos=new String[9];
-        for(ClsEProveedor objE : objNE.MtdListarProveedor())
+        ClsNProveedor objNP=new ClsNProveedor();
+        String[] datos=new String[9];        
+        List<TbProveedor> ListaP = objNP.MtdListarProveedor();       
+        for(TbProveedor objE : ListaP)
         {
-            datos[0]=String.valueOf(objE.getIdProveedor());
-            datos[1]=objE.getDni();
-            datos[2]=objE.getNombre();
-            datos[3]=objE.getRuc();
-            datos[4]=objE.getDireccion();
-            datos[5]=objE.getCelular();
-            datos[6]=objE.getEmail();
-            datos[7]=objE.getNCuenta();
-            if(objE.getEstado()==0)
+            datos[0]=String.valueOf(objE.getIdProv());
+            datos[1]=objE.getDniProv();
+            datos[2]=objE.getNombreProv();
+            datos[3]=objE.getRucProv();
+            datos[4]=objE.getDireccionProv();
+            datos[5]=objE.getCelularProv();
+            datos[6]=objE.getEmailProv();
+            datos[7]=objE.getNcuentaProv();
+            if(objE.getEstadoProv()==0)
             {
                 datos[8]="INACTIVO";
             }

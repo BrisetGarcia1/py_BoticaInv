@@ -7,6 +7,8 @@ package Presentación;
 
 import Entidad.ClsEKardex;
 import Entidad.ClsEProducto;
+import Entidad.TbKardex;
+import Entidad.TbProducto;
 import Negocio.ClsNKardex;
 import Negocio.ClsNProducto;
 import com.itextpdf.text.BaseColor;
@@ -24,6 +26,7 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import java.util.List;
 
 /**
  *
@@ -106,22 +109,24 @@ public class FrmImprimir extends javax.swing.JInternalFrame {
         if(rbtnUno.isSelected())
         {
             String codigo=JOptionPane.showInputDialog("INGRESE CODIGO DE BARRAS");
-            ClsEProducto objEE=new ClsEProducto();
+            TbKardex cbarr=new TbKardex(Integer.parseInt(codigo));
+            TbProducto objEE=new TbProducto();
             ClsNProducto objNE=new ClsNProducto();
             ClsNKardex objNEE=new ClsNKardex();
             
-            objEE.setCBarras(codigo);
+            objEE.setCbarrasProd(codigo);
             Principal.ayuda=1;  
             if(objNE.MtdBuscarProducto(objEE)==true)
             {
+                List<TbKardex> ListaK=objNEE.MtdListarKardex2(cbarr);
                 int cont=0;
-                for(ClsEKardex objEEE : objNEE.MtdListarKardex2(codigo))
+                for(TbKardex objEEE : ListaK)
                 {          
-                    vecProd[cont][0]=objEEE.getOperacion();
-                    vecProd[cont][1]=String.valueOf(objEEE.getCantidad());
-                    vecProd[cont][2]=objEEE.getFecha();
-                    vecProd[cont][3]=objEEE.getNombreProv();
-                    vecProd[cont][4]=objEEE.getDescripcionDoc();
+                    vecProd[cont][0]=objEEE.getOperacionKar();
+                    vecProd[cont][1]=String.valueOf(objEEE.getCantidadKar());
+                    vecProd[cont][2]=objEEE.getFechaKar().toString();
+                    vecProd[cont][3]=objEEE.getIdProv().getNombreProv();
+                    vecProd[cont][4]=objEEE.getIdDocumento().getDescripciondoc();
                     vecProd[cont][5]=String.valueOf(objEEE.getStock());
                     cont++;
                 }
@@ -147,9 +152,9 @@ public class FrmImprimir extends javax.swing.JInternalFrame {
                 }
                 documento.add(image); //agregamos imagen al documento
                 documento.add(Chunk.NEWLINE);
-                documento.add(new Paragraph("Stock mínimo: "+objEE.getsMinimo()+"                        Producto: "+objEE.getNombre()+" X"+objEE.getuCajas()+" "+objEE.getDescripcionUnidad()));
+                documento.add(new Paragraph("Stock mínimo: "+objEE.getSminimoProd()+"                        Producto: "+objEE.getNombreProd()+" X"+objEE.getUcajasProd()+" "+objEE.getIdUnid().getDescripcionUnid()));
                 documento.add(Chunk.NEWLINE);
-                documento.add(new Paragraph("Stock Máximo: "+objEE.getsMaximo()+"                     Proveedor: "+vecProd[0][3]+"                      Unidad: "+objEE.getDescripcionUnidad()));
+                documento.add(new Paragraph("Stock Máximo: "+objEE.getSmaximoProd()+"                     Proveedor: "+vecProd[0][3]+"                      Unidad: "+objEE.getIdUnid().getDescripcionUnid()));
                 documento.add(Chunk.NEWLINE);
                 PdfPTable tabla=new PdfPTable(5);
                 tabla.setWidthPercentage(100);
@@ -201,9 +206,11 @@ public class FrmImprimir extends javax.swing.JInternalFrame {
             int con=0;
             ClsNProducto objNE=new ClsNProducto();
             String[] datos=new String[100];
-            for(ClsEProducto objE : objNE.MtdListarProducto())
+            List<TbProducto> ListaP =objNE.MtdListarProducto();
+            
+            for(TbProducto objE :ListaP)
             {
-                datos[con]=objE.getCBarras();
+                datos[con]=objE.getCbarrasProd();
                 con++;
             }
              Document documento=new Document();   //fuera del for abrimos el documento
@@ -218,22 +225,25 @@ public class FrmImprimir extends javax.swing.JInternalFrame {
             {
                 
                 String codigo=datos[i];
-                ClsEProducto objEE=new ClsEProducto();
+                TbProducto objEE=new TbProducto();
                 ClsNProducto objNES=new ClsNProducto();
                 ClsNKardex objNEE=new ClsNKardex();
 
-                objEE.setCBarras(codigo);
+                objEE.setCbarrasProd(codigo);
+                TbKardex cbarr=new TbKardex(Integer.parseInt(codigo));
+                
                 Principal.ayuda=1;  
                 if(objNES.MtdBuscarProducto(objEE)==true)
                 {
+                    List<TbKardex> ListaK=objNEE.MtdListarKardex2(cbarr);
                     int cont=0;
-                    for(ClsEKardex objEEE : objNEE.MtdListarKardex2(codigo))
+                    for(TbKardex objEEE : ListaK)
                     {          
-                        vecProd[cont][0]=objEEE.getOperacion();
-                        vecProd[cont][1]=String.valueOf(objEEE.getCantidad());
-                        vecProd[cont][2]=objEEE.getFecha();
-                        vecProd[cont][3]=objEEE.getNombreProv();
-                        vecProd[cont][4]=objEEE.getDescripcionDoc();
+                        vecProd[cont][0]=objEEE.getOperacionKar();
+                        vecProd[cont][1]=String.valueOf(objEEE.getCantidadKar());
+                        vecProd[cont][2]=objEEE.getFechaKar().toString();
+                        vecProd[cont][3]=objEEE.getIdProv().getNombreProv();
+                        vecProd[cont][4]=objEEE.getIdDocumento().getDescripciondoc();
                         vecProd[cont][5]=String.valueOf(objEEE.getStock());
                         cont++;
                     }
@@ -256,9 +266,9 @@ public class FrmImprimir extends javax.swing.JInternalFrame {
                     }
                     documento.add(image); //agregamos imagen al documento
                     documento.add(Chunk.NEWLINE);
-                    documento.add(new Paragraph("Stock mínimo: "+objEE.getsMinimo()+"                        Producto: "+objEE.getNombre()+" X"+objEE.getuCajas()+" "+objEE.getDescripcionUnidad()));
+                    documento.add(new Paragraph("Stock mínimo: "+objEE.getSminimoProd()+"                        Producto: "+objEE.getNombreProd()+" X"+objEE.getUcajasProd()+" "+objEE.getIdUnid().getDescripcionUnid()));
                     documento.add(Chunk.NEWLINE);
-                    documento.add(new Paragraph("Stock Máximo: "+objEE.getsMaximo()+"                     Proveedor: "+vecProd[0][3]+"                      Unidad: "+objEE.getDescripcionUnidad()));
+                    documento.add(new Paragraph("Stock Máximo: "+objEE.getSmaximoProd()+"                     Proveedor: "+vecProd[0][3]+"                      Unidad: "+objEE.getIdUnid().getDescripcionUnid()));
                     documento.add(Chunk.NEWLINE);
                     PdfPTable tabla=new PdfPTable(5);
                     tabla.setWidthPercentage(100);

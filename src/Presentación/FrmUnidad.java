@@ -5,12 +5,14 @@
  */
 package Presentación;
 import Entidad.ClsEUnidad;
+import Entidad.TbUnidad;
 import Negocio.ClsNUnidad;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -185,9 +187,9 @@ public class FrmUnidad extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ClsEUnidad objEC=new ClsEUnidad();
+        TbUnidad objEC=new TbUnidad();
         ClsNUnidad objNC=new ClsNUnidad();
-        objEC.setDescripcionUnidad(txtDescripcion.getText());
+        objEC.setDescripcionUnid(txtDescripcion.getText());
 
         if(objNC.MtdResgistrarUnidad(objEC)==true)
         {
@@ -202,10 +204,10 @@ public class FrmUnidad extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        ClsEUnidad objEC=new ClsEUnidad();
+        TbUnidad objEC=new TbUnidad();
         ClsNUnidad objNC=new ClsNUnidad();
-        objEC.setIdUnidad(Integer.parseInt(txtIdUnidad.getText()));
-        objEC.setDescripcionUnidad(txtDescripcion.getText());
+        objEC.setIdUnid(Integer.parseInt(txtIdUnidad.getText()));
+        objEC.setDescripcionUnid(txtDescripcion.getText());
         if(objNC.MtdModificarUnidad(objEC)==true)
         {
             JOptionPane.showMessageDialog(null, "DATOS MODIFICADOS CORRECTAMENTE");
@@ -242,15 +244,18 @@ public class FrmUnidad extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     private void MtdListarUnidad() {
-         modelo=new DefaultTableModel();
+        modelo=new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("DESCRIPCION");
         ClsNUnidad objNC=new ClsNUnidad();
         String[] datos=new String[2];
-        for(ClsEUnidad objE : objNC.MtdListarUnidad())
+        
+        List<TbUnidad> ListaU = objNC.MtdListarUnidad();
+        
+        for(TbUnidad objE : ListaU)
         {          
-            datos[0]=String.valueOf(objE.getIdUnidad());
-            datos[1]=String.valueOf(objE.getDescripcionUnidad());
+            datos[0]=String.valueOf(objE.getIdUnid());
+            datos[1]=String.valueOf(objE.getDescripcionUnid());
             modelo.addRow(datos);
         }
         this.tbUnidad.setModel(modelo);

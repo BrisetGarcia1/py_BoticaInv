@@ -3,14 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsNDocumento.java</file>
-            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsConexion.java</file>
-            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Reportes/IngresosYSalidas.jrxml</file>
-            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Reportes/ProductosInactivos.jrxml</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsNProducto.java</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsNKardex.java</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsConexionMongoDB.java</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/FrmKardex.java</file>
+            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Negocio/ClsNEmpleado.java</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/Principal.java</file>
-            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/FrmReportes.java</file>
             <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Presentación/FrmLogin.java</file>
-            <file>file:/D:/SEMESTRE_2021-II/BDII/ProyectoGestion/src/Reportes/Empleados.jrxml</file>
         </group>
     </open-files>
 </project-private>

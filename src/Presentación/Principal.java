@@ -6,6 +6,7 @@
 package Presentación;
 
 import Entidad.ClsEEmpleado;
+import Entidad.TbEmpleado;
 import Negocio.ClsNEmpleado;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -281,10 +282,11 @@ public class Principal extends javax.swing.JFrame {
     
         Date date=new Date();
         ClsNEmpleado objNE=new ClsNEmpleado();
-        ClsEEmpleado objEE=new ClsEEmpleado();
+        TbEmpleado objEE=new TbEmpleado();
             SimpleDateFormat dateFormatLocal=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            objEE.setFechaSalida(String.valueOf(dateFormatLocal.format(date)));
-            objEE.setDniEmpleado(dni1);
+            objEE.setFechaS(date);
+            objEE.setDniEmpl(dni1);
+            objNE.MtdResgistroHoraSalidaMongo(objEE);
             if(objNE.MtdResgistroHoraSalida(objEE)==true)
             {
                 FrmLogin log=new FrmLogin();

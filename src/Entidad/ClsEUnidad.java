@@ -10,8 +10,11 @@ package Entidad;
  * @author Usuario
  */
 public class ClsEUnidad {
+    
     int idUnidad;
     String DescripcionUnidad;
+    
+    
     public int getIdUnidad() {
         return idUnidad;
     }

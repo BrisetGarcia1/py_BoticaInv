@@ -6,6 +6,7 @@
 package Presentación;
 
 import Entidad.ClsEEmpleado;
+import Entidad.TbEmpleado;
 import Negocio.ClsNEmpleado;
 import static java.awt.Color.white;
 import static java.awt.Color.yellow;
@@ -204,15 +205,16 @@ public class FrmLogin extends javax.swing.JFrame {
         String dni, clave;
         dni = txtDni.getText();
         clave = txtClave.getText();
-        ClsEEmpleado objEE=new ClsEEmpleado();
+        TbEmpleado objEE=new TbEmpleado();
         ClsNEmpleado objNE=new ClsNEmpleado();
-        objEE.setDniEmpleado(dni);
-        objEE.setContraseñaEmpleado(clave);
+        objEE.setDniEmpl(dni);
+        objEE.setContraseñaEmpl(clave);
         if(objNE.MtdLoguear(objEE)==true)
         {
             Date date=new Date();
-            SimpleDateFormat dateFormatLocal=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            objEE.setFechaIngreso(String.valueOf(dateFormatLocal.format(date)));
+            objEE.setFechaI(date);
+            objNE.MtdResgistroHoraIngresoMongo(objEE);
+            
             if(objNE.MtdResgistroHoraIngreso(objEE)==true)
             {
                 Principal menu=new Principal(puente,puente2,puente3,idempleado); //puentes al formulario MENU

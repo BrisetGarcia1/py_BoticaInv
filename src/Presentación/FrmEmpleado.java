@@ -5,7 +5,9 @@
  */
 package Presentación;
 import Entidad.ClsEEmpleado;
+import Entidad.TbEmpleado;
 import Entidad.ClsETipoEmpleado;
+import Entidad.TbTempleado;
 import Negocio.ClsNEmpleado;
 import Negocio.ClsNTipoEmpleado;
 import java.awt.event.KeyAdapter;
@@ -16,6 +18,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -414,35 +417,37 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
        
         java.util.Date fecha=jdcFechaNac.getDate();
         java.util.Date fecha2=jdcFechaIn.getDate();
-        DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
-        String f=formato.format(fecha);
-        String f2=formato.format(fecha2);
-        ClsEEmpleado objEE=new ClsEEmpleado();
+        //DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+//        String f=formato.format(fecha);
+//        String f2=formato.format(fecha2);
+        TbEmpleado objEE=new TbEmpleado();
         ClsNEmpleado objNE=new ClsNEmpleado();
-        objEE.setDniEmpleado(txtDni.getText());
-        objEE.setNombreEmpleado(txtNombre.getText());
-        objEE.setApellidosEmpleado(txtApellidos.getText());
+        objEE.setDniEmpl(txtDni.getText());
+        objEE.setNombreEmpl(txtNombre.getText());
+        objEE.setApellidosEmpl(txtApellidos.getText());        
+        int id=cmbTipoUsuario.getSelectedIndex()+1;
+        TbTempleado tipoemp=new TbTempleado(id);
         if(rbtnMasculino.isSelected())
         {
-            objEE.setSexoEmpleado("Masculino");
+            objEE.setSexoEmpl("Masculino");
         }
         else
         {
-            objEE.setSexoEmpleado("Femenino");
+            objEE.setSexoEmpl("Femenino");
         }
-        objEE.setFnacimientoEmpleado(f);
-        objEE.setDireccionEmpleado(txtDireccion.getText());
-        objEE.setTelefonoEmpleado(txtTelefono.getText());
-        objEE.setTipoEmpleado(cmbTipoUsuario.getSelectedIndex()+1);
-        objEE.setFingresoEmpleado(f2);
-        objEE.setContraseñaEmpleado(txtContraseña.getText());
+        objEE.setFnacimientoEmpl(fecha);
+        objEE.setDireccionEmpl(txtDireccion.getText());
+        objEE.setTelefonoEmpl(txtTelefono.getText());
+        objEE.setIdTempl(tipoemp);
+        objEE.setFingresoEmpl(fecha2);
+        objEE.setContraseñaEmpl(txtContraseña.getText());
         if(rbtnActivo.isSelected())
         {
-            objEE.setEstadoEmpleado(1);
+            objEE.setEstadoEmpl(1);
         }
         else
         {
-            objEE.setEstadoEmpleado(0);
+            objEE.setEstadoEmpl(0);
         }
             
         if(objNE.MtdResgistrarEmpleado(objEE)==true)
@@ -460,36 +465,38 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         java.util.Date fecha=jdcFechaNac.getDate();
         java.util.Date fecha2=jdcFechaIn.getDate();
-        DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
-        String f=formato.format(fecha);
-        String f2=formato.format(fecha2);
-        ClsEEmpleado objEE=new ClsEEmpleado();
+        //DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+        
+        //String f=formato.format(fecha);
+        //String f2=formato.format(fecha2);
+        TbEmpleado objEE=new TbEmpleado();
         ClsNEmpleado objNE=new ClsNEmpleado();
-        objEE.setIdEmpleado(Integer.parseInt(txtIdEmpleado.getText()));
-        objEE.setDniEmpleado(txtDni.getText());
-        objEE.setNombreEmpleado(txtNombre.getText());
-        objEE.setApellidosEmpleado(txtApellidos.getText());
+        objEE.setIdEmpl(Integer.parseInt(txtIdEmpleado.getText()));
+        objEE.setDniEmpl(txtDni.getText());
+        objEE.setNombreEmpl(txtNombre.getText());
+        objEE.setApellidosEmpl(txtApellidos.getText());
         if(rbtnMasculino.isSelected())
         {
-            objEE.setSexoEmpleado("Masculino");
+            objEE.setSexoEmpl("Masculino");
         }
         else
         {
-            objEE.setSexoEmpleado("Femenino");
+            objEE.setSexoEmpl("Femenino");
         }
-        objEE.setFnacimientoEmpleado(f);
-        objEE.setDireccionEmpleado(txtDireccion.getText());
-        objEE.setTelefonoEmpleado(txtTelefono.getText());
-        objEE.setTipoEmpleado(cmbTipoUsuario.getSelectedIndex()+1);
-        objEE.setFingresoEmpleado(f2);
-        objEE.setContraseñaEmpleado(txtContraseña.getText());
+        int id=cmbTipoUsuario.getSelectedIndex()+1;
+        objEE.setFnacimientoEmpl(fecha);
+        objEE.setDireccionEmpl(txtDireccion.getText());
+        objEE.setTelefonoEmpl(txtTelefono.getText());
+        objEE.setIdTempl(TbEmpleado.ValueOf(id));
+        objEE.setFingresoEmpl(fecha);
+        objEE.setContraseñaEmpl(txtContraseña.getText());
         if(rbtnActivo.isSelected())
         {
-            objEE.setEstadoEmpleado(1);
+            objEE.setEstadoEmpl(1);
         }
         else
         {
-            objEE.setEstadoEmpleado(0);
+            objEE.setEstadoEmpl(0);
         }
         if(objNE.MtdModificarEmpleado(objEE)==true)
         {
@@ -518,7 +525,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         {
             rbtnFemenino.setSelected(true);
         }
-         DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
         String f=(String)tbEmpleado.getValueAt(filam, 5);
         java.util.Date fechaa=null;       
         try {
@@ -621,20 +628,23 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         modelo.addColumn("ESTADO");
         ClsNEmpleado objNE=new ClsNEmpleado();
         String[] datos=new String[12];
-        for(ClsEEmpleado objE : objNE.MtdListarEmpleado())
+        
+        List<TbEmpleado> ListaEm=objNE.MtdListarEmpleado();
+        
+        for(TbEmpleado objE : ListaEm)
         {
-            datos[0]=String.valueOf(objE.getIdEmpleado());
-            datos[1]=objE.getDniEmpleado();
-            datos[2]=objE.getNombreEmpleado();
-            datos[3]=objE.getApellidosEmpleado();
-            datos[4]=objE.getSexoEmpleado();
-            datos[5]=objE.getFnacimientoEmpleado();
-            datos[6]=objE.getDireccionEmpleado();
-            datos[7]=objE.getTelefonoEmpleado();
-            datos[8]=String.valueOf(objE.getTipoEmpleado());
-            datos[9]=objE.getFingresoEmpleado();
-            datos[10]=String.valueOf(objE.getContraseñaEmpleado());
-            if(objE.getEstadoEmpleado()==0)
+            datos[0]=String.valueOf(objE.getIdEmpl());
+            datos[1]=objE.getDniEmpl();
+            datos[2]=objE.getNombreEmpl();
+            datos[3]=objE.getApellidosEmpl();
+            datos[4]=objE.getSexoEmpl();
+            datos[5]=objE.getFnacimientoEmpl().toString();
+            datos[6]=objE.getDireccionEmpl();
+            datos[7]=objE.getTelefonoEmpl();
+            datos[8]=String.valueOf(objE.getIdTempl().getDescripcionTempl());
+            datos[9]=objE.getFingresoEmpl().toString();
+            datos[10]=String.valueOf(objE.getContraseñaEmpl());
+            if(objE.getEstadoEmpl()==0)
             {
                 datos[11]="INACTIVO";
             }
@@ -653,9 +663,11 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         cmbTipoUsuario.removeAllItems();
         cmbTipoUsuario.setModel(value);    
         ClsNTipoEmpleado objNC =new ClsNTipoEmpleado();
-        for(ClsETipoEmpleado objE : objNC.LlenarTipoEmpleado())
+        List<TbTempleado> ListaTE = objNC.LlenarTipoEmpleado();
+        
+        for(TbTempleado objE : ListaTE)
         {
-            prueba[0]=objE.getDescripcionTipo();
+            prueba[0]=objE.getDescripcionTempl();
             value.addElement(prueba[0]);         
         }    
     }

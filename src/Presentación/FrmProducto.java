@@ -7,6 +7,8 @@ package Presentación;
 
 import Entidad.ClsEProducto;
 import Entidad.ClsEUnidad;
+import Entidad.TbProducto;
+import Entidad.TbUnidad;
 import Negocio.ClsNProducto;
 import Negocio.ClsNUnidad;
 import java.awt.event.KeyAdapter;
@@ -14,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -97,6 +100,11 @@ public class FrmProducto extends javax.swing.JInternalFrame {
         buttonGroup2.add(rbtnCodigobarras);
         rbtnCodigobarras.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         rbtnCodigobarras.setText("Código de barras");
+        rbtnCodigobarras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnCodigobarrasActionPerformed(evt);
+            }
+        });
         jPanel1.add(rbtnCodigobarras, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
 
         rbtnNombre.setBackground(new java.awt.Color(51, 51, 51));
@@ -224,7 +232,7 @@ public class FrmProducto extends javax.swing.JInternalFrame {
         });
         jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 500, 210, 50));
         jPanel2.add(txtUnidadesCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 85, 30));
-        jPanel2.add(fondoformulario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 590));
+        jPanel2.add(fondoformulario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 780, 590));
 
         lblPrecioVenta1.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
         lblPrecioVenta1.setForeground(new java.awt.Color(255, 255, 255));
@@ -249,21 +257,28 @@ public class FrmProducto extends javax.swing.JInternalFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        ClsEProducto objEE=new ClsEProducto();
+        TbProducto objEE=new TbProducto();
         ClsNProducto objNE=new ClsNProducto();
-        objEE.setNombre(txtNombre.getText());
-        objEE.setCBarras(txtCodigoBarras.getText());
-        objEE.setIdUnidad(cmbUnidad.getSelectedIndex()+1);
-        objEE.setuCajas(Integer.parseInt(txtUnidadesCaja.getText()));
+        objEE.setNombreProd(txtNombre.getText());
+        objEE.setCbarrasProd(txtCodigoBarras.getText());
+        
+        int id=cmbUnidad.getSelectedIndex()+1;
+        TbUnidad tipounid=new TbUnidad(id);
+        
+        objEE.setIdUnid(tipounid);
+        objEE.setUcajasProd(Integer.parseInt(txtUnidadesCaja.getText()));
         objEE.setStock(Integer.parseInt(txtStock.getText()));
+        objEE.setSminimoProd(0);
+        objEE.setSmaximoProd(0);
+        
 
         if(rbtnActivo.isSelected())
         {
-            objEE.setEstado(1);
+            objEE.setEstadoProd(1);
         }
         else
         {
-            objEE.setEstado(0);
+            objEE.setEstadoProd(0);
         }
             
         if(objNE.MtdResgistrarProducto(objEE)==true)
@@ -284,20 +299,23 @@ public class FrmProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        ClsEProducto objEE=new ClsEProducto();
+        TbProducto objEE=new TbProducto();
         ClsNProducto objNE=new ClsNProducto();
-        objEE.setCBarras(txtCodigoBarras.getText());
-        objEE.setNombre(txtNombre.getText());
+        objEE.setCbarrasProd(txtCodigoBarras.getText());
+        objEE.setNombreProd(txtNombre.getText());
         objEE.setStock(Integer.parseInt(txtStock.getText()));
-        objEE.setIdUnidad(cmbUnidad.getSelectedIndex()+1);
-        objEE.setuCajas(Integer.parseInt(txtUnidadesCaja.getText()));
+        
+        TbUnidad idunid= new TbUnidad(cmbUnidad.getSelectedIndex()+1);
+        
+        objEE.setIdUnid(idunid);
+        objEE.setUcajasProd(Integer.parseInt(txtUnidadesCaja.getText()));
         if(rbtnActivo.isSelected())
         {
-            objEE.setEstado(1);
+            objEE.setEstadoProd(1);
         }
         else
         {
-            objEE.setEstado(0);
+            objEE.setEstadoProd(0);
         }
         if(objNE.MtdModificarProducto(objEE)==true)
         {
@@ -353,6 +371,10 @@ TableRowSorter trs;
         tbProducto1.setRowSorter(trs);
     }//GEN-LAST:event_txtBuscar2KeyTyped
 
+    private void rbtnCodigobarrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnCodigobarrasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnCodigobarrasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
@@ -406,16 +428,19 @@ TableRowSorter trs;
         modelo.addColumn("ESTADO");
         ClsNProducto objNE=new ClsNProducto();
         String[] datos=new String[8];
-        for(ClsEProducto objE : objNE.MtdListarProducto())
+        
+        List<TbProducto> ListaP =objNE.MtdListarProducto();
+        
+        for(TbProducto objE : ListaP)
         {
-            datos[0]=objE.getCBarras();
-            datos[1]=objE.getNombre();
-            datos[2]=String.valueOf(objE.getuCajas());
-            datos[3]=String.valueOf(objE.getIdUnidad());
-            datos[4]=String.valueOf(objE.getsMinimo());
-            datos[5]=String.valueOf(objE.getsMaximo());
+            datos[0]=objE.getCbarrasProd();
+            datos[1]=objE.getNombreProd();
+            datos[2]=String.valueOf(objE.getUcajasProd());
+            datos[3]=String.valueOf(objE.getIdUnid().getDescripcionUnid());
+            datos[4]=String.valueOf(objE.getSminimoProd());
+            datos[5]=String.valueOf(objE.getSmaximoProd());
             datos[6]=String.valueOf(objE.getStock());
-            if(objE.getEstado()==0)
+            if(objE.getEstadoProd()==0)
             {
                 datos[7]="INACTIVO";
             }

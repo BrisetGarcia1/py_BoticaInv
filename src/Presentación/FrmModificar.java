@@ -6,6 +6,7 @@
 package Presentación;
 
 import Entidad.ClsEEmpleado;
+import Entidad.TbEmpleado;
 import Negocio.ClsNEmpleado;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -142,25 +143,25 @@ public class FrmModificar extends javax.swing.JInternalFrame {
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
          java.util.Date fecha=jdcFechaNac.getDate();
-        DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
-        String f=formato.format(fecha);
-        ClsEEmpleado objEE=new ClsEEmpleado();
+        //DateFormat formato=new SimpleDateFormat("yyyy-MM-dd");
+        //String f=formato.format(fecha);
+        TbEmpleado objEE=new TbEmpleado();
         ClsNEmpleado objNE=new ClsNEmpleado();
-        objEE.setDniEmpleado(Principal.txtDni.getText());
-        objEE.setNombreEmpleado(txtNombre.getText());
-        objEE.setApellidosEmpleado(txtApellidos.getText());
+        objEE.setDniEmpl(Principal.txtDni.getText());
+        objEE.setNombreEmpl(txtNombre.getText());
+        objEE.setApellidosEmpl(txtApellidos.getText());
         if(rbtnMasculino.isSelected())
         {
-            objEE.setSexoEmpleado("Masculino");
+            objEE.setSexoEmpl("Masculino");
         }
         else
         {
-            objEE.setSexoEmpleado("Femenino");
+            objEE.setSexoEmpl("Femenino");
         }
-        objEE.setFnacimientoEmpleado(f);
-        objEE.setDireccionEmpleado(txtDireccion.getText());
-        objEE.setTelefonoEmpleado(txtTelefono.getText());
-        objEE.setContraseñaEmpleado(txtContraseña.getText());
+        objEE.setFnacimientoEmpl(fecha);
+        objEE.setDireccionEmpl(txtDireccion.getText());
+        objEE.setTelefonoEmpl(txtTelefono.getText());
+        objEE.setContraseñaEmpl(txtContraseña.getText());
    
         if(objNE.MtdModificarEmpleado2(objEE)==true)
         {
@@ -196,9 +197,9 @@ public class FrmModificar extends javax.swing.JInternalFrame {
     public void MtdListarDatos() {
         String dni;
         dni = Principal.txtDni.getText();
-        ClsEEmpleado objEE=new ClsEEmpleado();
+        TbEmpleado objEE=new TbEmpleado();
         ClsNEmpleado objNE=new ClsNEmpleado();
-        objEE.setDniEmpleado(dni);
+        objEE.setDniEmpl(dni);
         if(objNE.MtdBuscarEmpleado(objEE)==true)
         {
             
